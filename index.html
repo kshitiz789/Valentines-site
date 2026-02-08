@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Will You Be My Valentine Bubu 👉👈 ?</title>
+
+    <style>
+
+        /* ---------- BODY ---------- */
+
+        body {
+            margin:0;
+            height:100dvh;
+            overflow:hidden;
+            font-family: Arial, sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background: linear-gradient(135deg,#ff9a9e,#fecfef);
+        }
+
+        /* floating hearts */
+        .heart {
+            position:absolute;
+            color:red;
+            font-size:20px;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh);
+                opacity:1;
+            }
+            to {
+                transform: translateY(-10vh);
+                opacity:0;
+            }
+        }
+
+        /* ---------- CONTENT ---------- */
+
+        .container {
+            text-align:center;
+            z-index:2;
+        }
+
+        h1 {
+            font-size:42px;
+            color:#fff;
+            text-shadow:0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        button {
+            padding:14px 26px;
+            font-size:20px;
+            border:none;
+            border-radius:12px;
+            cursor:pointer;
+            margin:10px;
+            transition: all 0.25s ease;
+        }
+
+        #yesBtn {
+            background:#ff2e63;
+            color:white;
+            transform: translateX(-200px);
+        }
+
+        #noBtn {
+            background:#333;
+            color:white;
+            position:absolute;
+            transition: left 0.2s ease, top 0.2s ease;
+        }
+
+        /* ---------- MODAL ---------- */
+
+        .modal {
+            display:none;
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.6);
+            justify-content:center;
+            align-items:center;
+            z-index: 3;
+        }
+
+        .modal-content {
+            background:white;
+            padding:50px;
+            border-radius:16px;
+            font-size:26px;
+            color:#ff2e63;
+            animation: pop 0.4s ease;
+        }
+
+        .modal-image {
+            width:150px;
+            height:auto;
+            display:block;
+            margin:0 auto 20px auto;
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.5); opacity:0; }
+            to { transform: scale(1); opacity:1; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will You Be My Valentine Bubu 👉👈 ?️</h1>
+        <button id="yesBtn"> Yes 😍 </button>
+        <button id="noBtn">No 🙃</button>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfF_dLvwEFh06u9Nm--cmF4xsjrB3hzVjGJg&s" class="modal-image">
+        ❤️ Yeaaaaay Jubbu!!! ❤️
+    </div>
+</div>
+
+<!-- small click sound -->
+<audio id="yesSound" preload="auto">
+
+<!--    <source src="https://www.myinstants.com/media/sounds/yapapa-cat_UwLkrYZ.mp3" type="audio/mpeg">-->
+    <source src="https://memestube.com/download.php?fileUrl=https://media.memestube.com/meme/yapapa-cat-audio-meme-download.mp3" type="audio/mpeg">
+
+</audio>
+
+<script>
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const modal = document.getElementById("modal");
+    const sound = document.getElementById("yesSound");
+
+    let escapeSpeed = 1;
+    let yesScale = 1;
+
+    /* ---------- NO BUTTON RUN AWAY ---------- */
+
+    function moveButton() {
+
+        const maxX = window.innerWidth - noBtn.offsetWidth;
+        const maxY = window.innerHeight - noBtn.offsetHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+
+        /* increase difficulty 😈 */
+        escapeSpeed += 0.3;
+
+        /* YES button grows bigger */
+        yesScale += 0.3;
+        yesBtn.style.transform = `scale(${yesScale})`;
+    }
+
+    /* desktop hover */
+    noBtn.addEventListener("mouseover", moveButton);
+
+    /* mobile touch */
+    noBtn.addEventListener("touchstart", function(e){
+        e.preventDefault();
+        moveButton();
+    });
+
+    /* click attempt */
+    noBtn.addEventListener("click", function(e){
+        e.preventDefault();
+        moveButton();
+    });
+
+    /* ---------- YES CLICK ---------- */
+
+    yesBtn.addEventListener("click", function(){
+        modal.style.display = "flex";
+        sound.play();
+    });
+
+    /* close modal */
+    modal.addEventListener("click", function(){
+        modal.style.display = "none";
+    });
+
+    /* ---------- FLOATING HEARTS ---------- */
+
+    function createHeart() {
+
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random()*100+"vw";
+        heart.style.fontSize = (Math.random()*20+10)+"px";
+        heart.style.animationDuration = (Math.random()*3+3)+"s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=> heart.remove(),6000);
+    }
+
+    setInterval(createHeart,300);
+
+</script>
+
+</body>
+</html>
